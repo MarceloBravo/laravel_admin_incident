@@ -1,0 +1,10 @@
+.titulos, .checkAll{
+    text-align: -webkit-center;
+}
+
+#btnNuevo, #btnEliminar{
+    display: none;
+}
+
+
+    

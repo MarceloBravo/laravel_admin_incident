@@ -1,0 +1,11 @@
+.alert{
+    display: none;
+}
+
+.divButton{
+    float: right;
+}
+
+#btnNuevo{
+    display: none;
+}

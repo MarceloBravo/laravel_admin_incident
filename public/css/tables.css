@@ -1,0 +1,36 @@
+.jumbotron {
+    background: white;    
+}
+
+.btn-default{
+    border-style: solid;
+    border-width: thin;
+    border-color: #c1c1c1;
+    border-radius: 5px !important;
+}
+
+.table-active, .table-active>th, .table-active>td {
+    background-color: rgba(0,0,0,0.01);
+}
+
+th{
+    border-top: none !important;    
+}
+
+.colAccion{
+    width: 100px;
+    padding: 0px !important;
+    vertical-align: middle !important;
+    text-align: -webkit-center !important;
+}
+
+.colAccion .btn-primary{
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.table td {
+    padding: 0rem;
+}
+
+

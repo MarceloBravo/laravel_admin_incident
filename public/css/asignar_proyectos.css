@@ -1,0 +1,7 @@
+.alert, #btnNuevo{
+    display: none;
+}
+
+.divButtonAddProject{
+    float: right;
+}
