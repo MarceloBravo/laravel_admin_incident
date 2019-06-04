@@ -42,4 +42,9 @@ class Rol extends Model
         return $this->belongsToMany(User::class)->withTimestamps();
     }
     */
+    
+    public function permisos()
+    {
+        return $this->belongsTo('App\Permiso','rol_id')->get();
+    }
 }

@@ -4,7 +4,6 @@
 
 @include('includes.msg')
 
-
 <div id="divForm" class="container-fluid">
     <div class="row">
         <div class="form">

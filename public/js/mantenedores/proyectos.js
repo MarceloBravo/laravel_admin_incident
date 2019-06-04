@@ -43,9 +43,10 @@ var proyecto = {
         $("#tbody").empty();
         $.get("listar_proyectos", function (data) {
             $(data).each(function (key, elem) {
-                $("#tbody").append("<tr><td>" + elem.nombre + "</td><td>" + elem.descripcion + "</td><td>" + elem.fecha_inicio + "</td><td><button type='button' value='" + elem.id + "' onclick='editar(this)' class='btn btn-primary'>Editar</button></td></tr>");
+                $("#tbody").append("<tr><td>" + elem.nombre + "</td><td>" + elem.descripcion + "</td><td>" + elem.fecha_inicio + "</td><td><button type='button' value='" + elem.id + "' onclick='editar(this)' class='btn btn-primary btnEditar'>Editar</button></td></tr>");
             });
         });
+        configurar.botones();
     },
 
     actualizarListado: function (msg) {
@@ -132,9 +133,10 @@ var proyecto = {
         $.post("/proyectos/filtro", $("#formFiltro").serialize(), function (data) {
             $("#tbody").empty();
             $(data).each(function (key, elem) {
-                $("#tbody").append("<tr><td>" + elem.nombre + "</td><td>" + elem.descripcion + "</td><td>" + elem.fecha_inicio + "</td><td><button type='button' value='" + elem.id + "' onclick='editar(this)' class='btn btn-primary'>Editar</button></td></tr>");
+                $("#tbody").append("<tr><td>" + elem.nombre + "</td><td>" + elem.descripcion + "</td><td>" + elem.fecha_inicio + "</td><td><button type='button' value='" + elem.id + "' onclick='editar(this)' class='btn btn-primary btnEditar'>Editar</button></td></tr>");
             });
         });
+        configurar.botones();
     },
     
     ocultarMensajes: function(){

@@ -26,7 +26,8 @@ class MenusRequest extends FormRequest
         return [
             "nombre"=>"required|max:100",
             "ruta"=>"required|max:255",
-            "posicion"=>"required"
+            "posicion"=>"required",
+            "ocultar"=>"required|in:1,0",
         ];
     }
 }

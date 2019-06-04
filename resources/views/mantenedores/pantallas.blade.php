@@ -29,25 +29,28 @@
                     </div>
                     <div class="form-group row">
                         {{ Form::label("lblBtnNuevo","Posee botón Nuevo",["class"=>"col-sm-2 col-form-label form-checkbox form-icon form-text"]) }}
-                        <div class="col-sm-10">                            
-                            <input type="hidden" name="boton_nuevo" value="0"/>
-                            {{ Form::select("boton_nuevo",["1"=>"Si","0"=>"No"],null,["id"=>"boton_nuevo", "class"=>"form-control"])}}
+                        <div class="col-sm-3">
+                            {{ Form::select("boton_nuevo",[1=>"Si",0=>"No"],null,["id"=>"boton_nuevo", "class"=>"form-control"])}}
                         </div>
                     </div>
                     <div class="form-group row">                        
                         {{ Form::label("lblBtnCrear","Posee botón Grabar",["class"=>"col-sm-2 col-form-label"]) }}
-                        <div class="col-sm-10">
-                            <input type="hidden" name="boton_crear" value="0"/>
-                            {{ Form::select("boton_grabar",["1"=>"Si","0"=>"No"],null,["id"=>"boton_grabar", "class"=>"form-control"])}}
+                        <div class="col-sm-3">
+                            {{ Form::select("boton_grabar",[1=>"Si",0=>"No"],null,["id"=>"boton_grabar", "class"=>"form-control"])}}
                         </div>
                     </div>
                     <div class="form-group row">
                         {{ Form::label("lblBtnEliminar","Posee botón Eliminar",["class"=>"col-sm-2 col-form-label"]) }}
-                        <div class="col-sm-10">
-                            <input type="hidden" name="boton_eliminar" value="0"/>
-                            {{ Form::select("boton_eliminar",["1"=>"Si","0"=>"No"],null,["id"=>"boton_eliminar","class"=>"form-control"])}}
+                        <div class="col-sm-3">
+                            {{ Form::select("boton_eliminar",[1=>"Si",0=>"No"],null,["id"=>"boton_eliminar","class"=>"form-control"])}}
                         </div>
                     </div>
+                    <div class="form-group row">
+                        {{ Form::label("lblEscritorio","Es escritorio de la aplicación",["class"=>"col-sm-2 col-form-label"]) }}
+                        <div class="col-sm-3">
+                            {{ Form::select("es_escritorio",[1=>"Si",0=>"No"],null,["id"=>"es_escritorio","class"=>"form-control"])}}
+                        </div>
+                    </div>                    
                 </fieldset>
                 
             </form>        

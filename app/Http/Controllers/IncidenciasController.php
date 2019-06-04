@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Incidente;
 use Auth;
 use App\Http\Requests\IncidentesRequest;
+use App\Proyecto;
 
 class IncidenciasController extends Controller
 {
@@ -37,8 +38,9 @@ class IncidenciasController extends Controller
      */
     public function store(IncidentesRequest $request)
     {
+        $idNivel = Proyecto::find(Auth::user()->selected_project_id)->getFirstIdNivel();    //La incidencia siempre empezará por el nivel más bajo
         $incidente = new Incidente();
-        $incidente->fill(array_merge($request->all(), ["cliente_id"=>Auth::user()->id]));
+        $incidente->fill(array_merge($request->all(), ["cliente_id"=>Auth::user()->id,"proyecto_id"=>Auth::user()->selected_project_id,"nivel_id"=>$idNivel]));
         $incidente->save();
         
         return response()->json(["message-ok","El incidente ha sido registrado!"]);
@@ -52,7 +54,8 @@ class IncidenciasController extends Controller
      */
     public function show($id)
     {
-        //
+        $incidente = Incidente::find($id);
+        return response()->json(['incidente'=>$incidente, 'severidad'=>$incidente->severidad_nombre,'proyecto'=>$incidente->proyecto(),'nivel'=>$incidente->nivel(),'soporte'=>$incidente->nombre_soporte,'categoria'=>$incidente->categoria()]);
     }
 
     /**
@@ -63,7 +66,7 @@ class IncidenciasController extends Controller
      */
     public function edit($id)
     {
-        //
+        
     }
 
     /**

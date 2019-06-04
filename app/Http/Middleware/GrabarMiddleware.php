@@ -3,9 +3,10 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\Redirect;
+use App\Permiso;
+use Auth;
 
-class AdminMiddleware
+class GrabarMiddleware
 {
     /**
      * Handle an incoming request.
@@ -16,10 +17,11 @@ class AdminMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if(!Auth::check())
-            return Redirect::to("/");
-            
-        if(Auth::user()->role_id == 1)
-            return $next($request);
+        if(!Permiso::permisosGrabar(Auth::user()->role_id, $request->path()))
+        {
+            abort(403,"No pósee los permisos para grabar el registro.");
+        }
+        
+        return $next($request);
     }
 }

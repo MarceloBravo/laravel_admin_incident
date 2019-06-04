@@ -1,27 +1,5 @@
 $(function(){
-    /*
-    $(document).ready(function(){
-        $.get("/proyectos", function(res){
-            $(res).each(function(key, elem){
-               $("#tbody").append("<tr><td>"+elem.nombre+"</td><td><button type='button' value='"+elem.id+"' onclick='editar(this)' class='btn btn-primary'>Editar</button></td></tr>")
-            });
-        });
-        
-        $.ajax({
-                url: "/proyectos",                
-                type: 'get',
-                data: $("#form").serialize(),
-                success:function(response){
-                    for(var i=0;i<response.length;i++){                        
-                        $("#tbody").append("<tr><td>"+response[i].nombre+"</td></td></td></tr>");
-                    }
-                    
-                    //document.location = response;
-                }
-            });
-            
-    });
-   */
+    
     $("#btnGrabar").click(function(){
         if(confirm("¿Desea grabar el registro?")){
             $.ajax({

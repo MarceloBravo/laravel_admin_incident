@@ -39,6 +39,12 @@
                             {{ Form::number('posicion',null,['id'=>'posicion', 'class'=>'form-control']) }}
                         </div>
                     </div>
+                    <div class="form-group row">
+                        {{ Form::label("lblOcultar","Ocultar",["class"=>"col-sm-2 col-form-label"]) }}
+                        <div class="col-sm-3">
+                            {{ Form::select("ocultar",[0=>"No",1=>"Si"],null,["id"=>"ocultar","class"=>"form-control"])}}
+                        </div>
+                    </div>
                 </fieldset>
 
             </form>        
@@ -49,12 +55,6 @@
 
 @include('includes.grid')
 
-@endsection
-
-
-
-@section('jquery')
-<script type='text/javascript' src="{{ asset('js/jquery.js') }}"></script>
 @endsection
 
 @section('script')

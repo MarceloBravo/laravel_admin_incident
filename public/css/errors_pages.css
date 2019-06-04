@@ -1,0 +1,18 @@
+body{
+    background-color: white;
+}
+
+.error-full-page, .jumbotron {
+    background: #ffffff!important;
+}
+
+#container{
+    min-height: 1px !important;
+    height: 100%;
+    background-color: white;
+}
+
+.error-full-page .page-error {
+    margin-top: 0px;
+}
+

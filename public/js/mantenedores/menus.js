@@ -42,18 +42,20 @@ var grid = {
         $.get("/listar_menus", function (data) {
             $("#tbody").empty();
             $(data).each(function (id, elem) {
-                $("#tbody").append("<tr><td>" + elem.nombre + "</td><td>" + elem.posicion + "</td><td>" + (elem.menu_padre == null ? "" : elem.menu_padre) + "</td><td>" + elem.ruta + "</td><td class='colAccion'><button class='btn btn-primary' value='" + elem.id + "' onclick='editar(this)'>Editar</button></td></tr>");
+                $("#tbody").append("<tr><td>" + elem.nombre + "</td><td>" + elem.posicion + "</td><td>" + (elem.menu_padre == null ? "" : elem.menu_padre) + "</td><td>" + elem.ruta + "</td><td class='colAccion'><button class='btn btn-primary btnEditar' value='" + elem.id + "' onclick='editar(this)'>Editar</button></td></tr>");
             });
         });
+        configurar.botones();
     },
     
     filtrar: function(texto){
         $.post("/menus/filtro",$("#formFiltro").serialize(), function(data){
             $("#tbody").empty();
            $(data).each(function(id, elem){
-               $("#tbody").append("<tr><td>" + elem.nombre + "</td><td>" + elem.posicion + "</td><td>" + (elem.menu_padre == null ? "" : elem.menu_padre) + "</td><td>" + elem.ruta + "</td><td class='colAccion'><button class='btn btn-primary' value='" + elem.id + "' onclick='editar(this)'>Editar</button></td></tr>");
+               $("#tbody").append("<tr><td>" + elem.nombre + "</td><td>" + elem.posicion + "</td><td>" + (elem.menu_padre == null ? "" : elem.menu_padre) + "</td><td>" + elem.ruta + "</td><td class='colAccion'><button class='btn btn-primary btnEditar' value='" + elem.id + "' onclick='editar(this)'>Editar</button></td></tr>");
            }) ;
         });
+        configurar.botones();
     }
 }
 
@@ -77,6 +79,8 @@ function editar(obj) {
         $("#ruta").val(data.ruta);
         $("#menu_padre_id").val(data.menu_padre_id);
         $("#posicion").val(data.posicion);
+        $("#ocultar").val(data.ocultar);
         $("#btnEliminar").attr("disabled", false);
+        $("#_method").val("PUT");
     });
 }

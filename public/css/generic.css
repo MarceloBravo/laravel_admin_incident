@@ -15,8 +15,30 @@ nav{
     border-bottom-style: solid !important;
 }
 
+.navbar-nav {
+    display: block;
+}
+
+.navbar-default {
+    background-color: white;
+    border-color: white;
+}
+
 .navbar-brand{
     color: #d20606 !important;
+}
+
+.nav>li{
+    padding: 0px 5px;    
+}
+
+.lblCurrentProyect{
+    line-height: 30px;
+}
+
+
+.children-menu{
+    position: absolute !important;
 }
 
 .bg-lightm{
@@ -51,7 +73,7 @@ nav{
 
 
 html, body, #app, main{
-    height: 100%;
+    height: 97%;
 }
 
 .panel-footer .row div{
@@ -81,10 +103,20 @@ html, body, #app, main{
     margin: 10px 0px;    
 }
 
-
+#btnNuevo, #btnGrabar, #btnEliminar, .btnEditar{
+    display: none;
+}
 
 @media (min-width: 1200px){
-.jumbotron {
-    padding: 0em 5rem;
+    .jumbotron {
+        padding: 0em 5rem;
+    }
 }
+
+
+@media (min-width: 768px){
+    .navbar-nav>li>a {
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
 }

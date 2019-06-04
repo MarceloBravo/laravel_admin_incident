@@ -24,7 +24,7 @@ class Pantalla extends Model
     /**
      * @var array
      */
-    protected $fillable = ['nombre', 'menu_id', 'created_at', 'boton_nuevo', 'boton_grabar', 'boton_eliminar', 'updated_at', 'deleted_at'];
+    protected $fillable = ['nombre', 'menu_id', 'created_at', 'boton_nuevo', 'boton_grabar', 'boton_eliminar', 'es_escritorio', 'updated_at', 'deleted_at'];
 
     
     public static function listar(){
@@ -40,5 +40,15 @@ class Pantalla extends Model
                 . "FROM pantallas p "
                 . "INNER JOIN menus m ON p.menu_id = m.id "
                 . "WHERE CONCAT(p.nombre, m.nombre)  LIKE :filtro", ["filtro"=>"%".$criterio."%"]);
+    }
+    
+    public static function escritorios()
+    {
+        return Pantalla::where("es_escritorio",true)->get();
+    }
+    
+    public function menu()
+    {
+        return $this->belongsTo('App\Menu')->first();
     }
 }

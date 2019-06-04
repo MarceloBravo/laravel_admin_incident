@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use App\Menu;
+use App\Pantalla;
 
 /**
  * @property integer $id
@@ -29,6 +31,8 @@ class Permiso extends Model
      */
     protected $fillable = ['rol_id', 'pantalla_id', 'ver', 'crear', 'modificar', 'eliminar', 'created_at', 'updated_at'];
 
+    
+    
     public static function listar(){
         return DB::select("SELECT
                             r.id as rol_id, 
@@ -55,18 +59,41 @@ class Permiso extends Model
                             LEFT JOIN permisos pr ON pr.pantalla_id = qry.pantalla_id and pr.rol_id = qry.rol_id 
                             WHERE qry.rol_id = :id", ["id"=>$rolId]);
     }
+  
     
-    /*
-    public static function buscar($id){
-        $res = DB::select("SELECT prol.id, 
-                                p.id, p.nombre, 
-                                p.boton_nuevo, p.boton_grabar, p.boton_actualizar, p.boton_eliminar,
-                                pr.ver, pr.crear, pr.modificar, pr.eliminar 
-                            FROM pantallas p 
-                            LEFT JOIN permisos pr ON p.id = pr.pantalla_id 
-                            LEFT JOIN permisos_rol prol ON pr.rol_id = prol.permiso_id 
-                            prol.id = :id",["id"=>$id]);
+    public static function accesoPantalla($idRol, $path)
+    {
+        $permisos = Permiso::obtenerPermisos($idRol, "/".$path);
+        return (!is_null($permisos)) ? $permisos->ver : false ;
     }
-     * 
-     */
+    
+    public static function permisosGrabar($idRol, $path)
+    {
+        $permisos = Permiso::obtenerPermisos($idRol, "/".$path);
+        return (!is_null($permisos)) ? $permisos->crear : false;
+    }
+    
+    public static function permisosActualizar($idRol, $path)
+    {
+        $ruta = explode("/",$path);
+        $permisos = Permiso::obtenerPermisos($idRol, "/".$ruta[0]);
+        return  (!is_null($permisos)) ? $permisos->modificar: false;
+    }
+    
+    public static function permisosEliminar($idRol, $path)
+    {
+        $ruta = explode("/",$path);
+        $permisos = Permiso::obtenerPermisos($idRol, "/".$ruta[0]);
+        return (!is_null($permisos)) ? $permisos->eliminar : false;
+    }
+    
+    public static function obtenerPermisos($idRol, $path)
+    {   
+        $menu = Menu::where("ruta",$path)->first();
+        if(is_null($menu)){return null;}
+        $pantalla = Pantalla::where("menu_id",$menu->id)->first();
+        if(is_null($pantalla)){return null;}
+        return Permiso::where("pantalla_id",$pantalla->id)->where("rol_id",$idRol)->first();
+    }
+    
 }

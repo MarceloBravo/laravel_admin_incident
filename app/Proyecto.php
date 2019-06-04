@@ -39,4 +39,19 @@ class Proyecto extends Model
                 . "WHERE deleted_at IS NULL");
     }
     
+    //Relación de muchos a muchos con tabla pivote (Usuer -> user_project -> proyecto)
+    public function usuarios()
+    {
+        return $this->belongsToMany('App\User','user_project', 'proyecto_id', 'user_id')->get();
+    }
+    
+    public function niveles()
+    {
+        return $this->belongsToMany('App\Nivel', 'user_project','proyecto_id','nivel_id')->get();
+    }
+    
+    public function getFirstIdNivel()
+    {
+        return $this->niveles()->first()->id;
+    }
 }

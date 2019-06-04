@@ -8,6 +8,12 @@ use App\Pantalla;
 
 class PantallaController extends Controller
 {
+    public function __construct() {
+        $this->middleware('acceso.pantalla',['only'=>'index']);
+        $this->middleware('grabar',['only'=>['store']]);
+        $this->middleware('actualizar',['only'=>['update']]);
+        $this->middleware('eliminar',['only'=>['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -107,7 +113,7 @@ class PantallaController extends Controller
     }
     
     
-    public function filtrar(Request $request){
+    public function filtrar(PantallasRequest $request){       
         $filtro = $request['txtFiltro'];
         if($filtro == ""){
             $pantallas = Pantalla::all();

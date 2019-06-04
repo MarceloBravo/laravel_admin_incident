@@ -49,7 +49,7 @@
             </form>
             <div class='divButton'>
                 <button type="button" id='btnGrabar' class="btn btn-primary">Reportar incidente</button>
-                <button type="button" id='btnNuevo' class="btn btn-danger">Limpiar formulario</button>
+                <button type="button" id='btnLimpiarForm' class="btn btn-danger">Limpiar formulario</button>
             </div>
         </div>
     </div>
@@ -59,6 +59,7 @@
 
 @section('jquery')
 <script type="text/javascript" src="{{ url('js/jquery.js') }}"></script>
+<script type="text/javascript" src="{{ url('js/botones.js') }}"></script>
 @endsection
 
 @section('script')

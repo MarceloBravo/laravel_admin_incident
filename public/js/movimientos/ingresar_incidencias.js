@@ -2,13 +2,20 @@ $(function(){
     
     $(document).ready(function(){
         incidente.cargarCategorias();
+        configurar.botones();
     });
     
    $("#btnGrabar").click(function(){
-      incidente.grabar();
+        if($("#proyectoSeleccionado").val() !=  "")
+        {
+            incidente.grabar();
+        }else{
+            $("#message-error").css("display", "block");
+            $("#lbl_message-error").html("Debe seleccionar un proyecto.");
+        }
    });
     
-   $("#btnNuevo").click(function(){
+   $("#btnLimpiarForm").click(function(){
       incidente.nuevo();
    });
    
@@ -25,7 +32,7 @@ $(function(){
 var incidente = {
     cargarCategorias: function(){
         $("#categoria_id").empty();
-        $.get("/listar_categorias/1",function(data){
+        $.get("/listar_categorias",function(data){
             $("#categoria_id").append("<option value=''> -- Seleccione -- </option>");
             $(data).each(function(index, elem){
                 $("#categoria_id").append("<option value='"+elem.id+"'>"+elem.nombre+"</option>");
@@ -67,16 +74,17 @@ var incidente = {
        $("#titulo_incidente").attr("disabled",disabled);
        $("#descripcion").attr("disabled",disabled);
        $("#btnGrabar").css("display","none");
-       $("#btnNuevo").css("display","block");
+       $("#btnLimpiarForm").css("display","block");
    },
    
    nuevo: function(){
        incidente.changeInputsState(false);
        $("#btnGrabar").css("display","block");
-       $("#btnNuevo").css("display","none");
+       $("#btnLimpiarForm").css("display","none");
        $("#form")[0].reset();
        $("#message-ok").css("display", "none");
        $("#message-error").css("display", "none");
+       $("#restChar").html("255");
    },
    
    contadorCaracteres: function(input){

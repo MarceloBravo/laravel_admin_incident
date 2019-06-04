@@ -4,7 +4,6 @@ $(function(){
         grid.configGrid();
         grid.listar();
         form.configForm();
-        //form.cargarProyectos();
     });
     
     $("#btnNuevo").click(function(){
@@ -53,18 +52,20 @@ var grid = {
         $.get("/listar_categorias",function(data){
             $("#tbody").empty();
             $(data).each(function(index, elem){
-                $("#tbody").append("<tr><td>"+elem.nombre+"</td><td>"+elem.descripcion+"</td><td><button class='btn btn-primary' value='"+elem.id+"' onclick='editar(this)'>Editar</button></td></tr>");
+                $("#tbody").append("<tr><td>"+elem.nombre+"</td><td>"+elem.descripcion+"</td><td><button class='btn btn-primary btnEditar' value='"+elem.id+"' onclick='editar(this)'>Editar</button></td></tr>");
             });
         });
+        configurar.botones();
     },
     
     filtrar: function(){
         $("#tbody").empty();
         $.post("/categorias/filtro",$("#formFiltro").serialize(),function(data){
             $(data).each(function(index, elem){
-              $("#tbody").append("<tr><td>"+elem.nombre+"</td><td>"+elem.descripcion+"</td><td><button class='btn btn-primary' value='"+elem.id+"' onclick='editar(this)'>Editar</button></td></tr>");  
+              $("#tbody").append("<tr><td>"+elem.nombre+"</td><td>"+elem.descripcion+"</td><td><button class='btn btn-primary btnEditar' value='"+elem.id+"' onclick='editar(this)'>Editar</button></td></tr>");  
             });   
         });
+        configurar.botones();
     }
     
 };

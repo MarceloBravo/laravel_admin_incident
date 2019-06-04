@@ -26,6 +26,10 @@ class PantallasRequest extends FormRequest
         return [
             "nombre"=>"required|max:50|unique:pantallas,nombre,".$this->pantalla,
             "menu_id"=>"required",
+            "boton_nuevo"=>"required|in:1,0",
+            "boton_grabar"=>"required|in:1,0",
+            "boton_eliminar"=>"required|in:1,0",
+            "es_escritorio"=>"required|in:1,0",
         ];
     }
 }

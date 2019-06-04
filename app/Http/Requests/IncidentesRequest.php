@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Incidente;
 
 class IncidentesRequest extends FormRequest
 {
@@ -28,7 +27,7 @@ class IncidentesRequest extends FormRequest
             "titulo"=>"required|max:150|unique:incidencias,titulo",
             "descripcion"=>"required|max:255",
             "categoria_id"=>"required|exists:categorias,id",
-            "severidad"=>"required|in:A,M,B"         
+            "severidad"=>"required|in:A,M,B"
         ];
     }
 }

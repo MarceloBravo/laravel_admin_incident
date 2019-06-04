@@ -3,21 +3,648 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">Dashboard</div>
 
-                <div class="card-body">
+                <div id="listado-incidencias" class="card-body">
                     @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
+                    <div class="alert alert-success" role="alert">
+                        {{ session('status') }}
+                    </div>
                     @endif
 
-                    Estas logueado!
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <!--Default Tabs (Left Aligned)-->
+                            <!--===================================================-->
+                            <div class="tab-base">
+                                <!--Nav Tabs-->
+                                <ul class="nav nav-tabs">
+                                    <li class="active">
+                                        <a data-toggle="tab" href="#demo-lft-tab-1">Incidentes pendientes </a>
+                                    </li>
+                                    <li>
+                                        <a data-toggle="tab" href="#demo-lft-tab-2">Incidentes asignados a mi</a>
+                                    </li>
+                                    <li>
+                                        <a data-toggle="tab" href="#demo-lft-tab-3">Incidentes reportados por mi</a>
+                                    </li>
+                                    <li>
+                                        <a data-toggle="tab" href="#demo-lft-tab-4">Incidentes en curso</a>
+                                    </li>
+                                </ul>
+                                <!--Tabs Content-->
+                                <div class="tab-content">
+                                    <div id="demo-lft-tab-1" class="tab-pane fade active in">
+                                        <h4 class="text-thin">Incidentes pendientes</h4>                                        
+                                        <div class="panel">                                            
+                                            <div class="panel-body">
+                                                <table id="demo-dt-selection" class="table table-striped table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Código</th>
+                                                            <th>Categoría</th>
+                                                            <th>Severidad</th>
+                                                            <th>Estado</th>
+                                                            <th>Fecha creación</th>
+                                                            <th>Título</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach($incidentesPendientes as $incidente)
+                                                        <tr onclick="detalleIncidencia({{ $incidente->id }}, 1)">
+                                                            <td>{{ $incidente->id }}</td>
+                                                            <td>{{ $incidente->categoria()->nombre }}</td>
+                                                            <td>{{ $incidente->severidad_nombre }}</td>
+                                                            <td>{{ $incidente->estado }}</td>
+                                                            <td>{{ $incidente->created_at }}</td>
+                                                            <td>{{ $incidente->titulo_corto }}</td>
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="demo-lft-tab-2" class="tab-pane fade">
+                                        <h4 class="text-thin">Incidentes asignados a mi</h4>                                        
+                                        <div class="panel">                                            
+                                            <div class="panel-body">
+                                                <table id="demo-dt-selection" class="table table-striped table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Código</th>
+                                                            <th>Categoría</th>
+                                                            <th>Severidad</th>
+                                                            <th>Estado</th>
+                                                            <th>Fecha creación</th>
+                                                            <th>Título</th>
+                                                            <!-- <th>Opción</th> -->
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach($misIncidencias as $incidente)
+                                                        <tr onclick="detalleIncidencia({{ $incidente->id }}, 2)">
+                                                            <td>{{ $incidente->id }}</td>
+                                                            <td>{{ $incidente->categoria()->nombre }}</td>
+                                                            <td>{{ $incidente->severidad_nombre }}</td>
+                                                            <td>{{ $incidente->estado }}</td>
+                                                            <td>{{ $incidente->created_at }}</td>
+                                                            <td>{{ $incidente->titulo_corto }}</td>
+                                                            <!--
+                                                            <td>
+                                                                <button type="button" class="btn btn-primary btn-sm" value="{{ $incidente->id }}">Atender</button>
+                                                            </td>
+                                                            -->
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="demo-lft-tab-3" class="tab-pane fade">
+                                        <h4 class="text-thin">Incidentes reportados por mi</h4>                                        
+                                        <div class="panel">                                            
+                                            <div class="panel-body">
+                                                <table id="demo-dt-selection" class="table table-striped table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Código</th>
+                                                            <th>Categoría</th>
+                                                            <th>Severidad</th>
+                                                            <th>Estado</th>
+                                                            <th>Fecha creación</th>
+                                                            <th>Título</th>
+                                                            <th>Responsable</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach($misIncidentesReportados as $incidente)                                                        
+                                                        <tr onclick="detalleIncidencia({{ $incidente->id }}, 3)">
+                                                            <td>{{ $incidente->id }}</td>
+                                                            <td>{{ $incidente->categoria()->nombre }}</td>
+                                                            <td>{{ $incidente->severidad_nombre }}</td>
+                                                            <td>{{ $incidente->estado }}</td>
+                                                            <td>{{ $incidente->created_at }}</td>
+                                                            <td>{{ $incidente->titulo_corto }}</td>
+                                                            <td>{{ !is_null($incidente->soporte()) ? $incidente->soporte()->name : 'Sin asignar' }}</td>
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="demo-lft-tab-4" class="tab-pane fade">
+                                        <h4 class="text-thin">Incidentes en curso</h4>                                        
+                                        <div class="panel">                                            
+                                            <div class="panel-body">
+                                                <table id="demo-dt-selection" class="table table-striped table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Código</th>
+                                                            <th>Categoría</th>
+                                                            <th>Severidad</th>
+                                                            <th>Estado</th>
+                                                            <th>Fecha creación</th>
+                                                            <th>Título</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Albert Desouza</td>
+                                                            <td>System Architect</td>
+                                                            <td>Edinburgh</td>
+                                                            <td>61</td>
+                                                            <td>2011/04/25</td>
+                                                            <td>$320,800</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Melinda</td>
+                                                            <td>Accountant</td>
+                                                            <td>Tokyo</td>
+                                                            <td>63</td>
+                                                            <td>2011/07/25</td>
+                                                            <td>$170,750</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Amy	Douglas</td>
+                                                            <td>Junior Technical Author</td>
+                                                            <td>San Francisco</td>
+                                                            <td>66</td>
+                                                            <td>2009/01/12</td>
+                                                            <td>$86,000</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Kirk Wong</td>
+                                                            <td>Senior Javascript Developer</td>
+                                                            <td>Edinburgh</td>
+                                                            <td>22</td>
+                                                            <td>2012/03/29</td>
+                                                            <td>$433,060</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Jamie Vasquez</td>
+                                                            <td>Accountant</td>
+                                                            <td>Tokyo</td>
+                                                            <td>33</td>
+                                                            <td>2008/11/28</td>
+                                                            <td>$162,700</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Corina T. Jones</td>
+                                                            <td>Integration Specialist</td>
+                                                            <td>New York</td>
+                                                            <td>61</td>
+                                                            <td>2012/12/02</td>
+                                                            <td>$372,000</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Sharon T. Waldron</td>
+                                                            <td>Sales Assistant</td>
+                                                            <td>San Francisco</td>
+                                                            <td>59</td>
+                                                            <td>2012/08/06</td>
+                                                            <td>$137,500</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Rhona Davidson</td>
+                                                            <td>Integration Specialist</td>
+                                                            <td>Tokyo</td>
+                                                            <td>55</td>
+                                                            <td>2010/10/14</td>
+                                                            <td>$327,900</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Colleen Hurst</td>
+                                                            <td>Javascript Developer</td>
+                                                            <td>San Francisco</td>
+                                                            <td>39</td>
+                                                            <td>2009/09/15</td>
+                                                            <td>$205,500</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Sonya Frost</td>
+                                                            <td>Software Engineer</td>
+                                                            <td>Edinburgh</td>
+                                                            <td>23</td>
+                                                            <td>2008/12/13</td>
+                                                            <td>$103,600</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Jena Gaines</td>
+                                                            <td>Office Manager</td>
+                                                            <td>London</td>
+                                                            <td>30</td>
+                                                            <td>2008/12/19</td>
+                                                            <td>$90,560</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Quinn Flynn</td>
+                                                            <td>Support Lead</td>
+                                                            <td>Edinburgh</td>
+                                                            <td>22</td>
+                                                            <td>2013/03/03</td>
+                                                            <td>$342,000</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Charde Marshall</td>
+                                                            <td>Regional Director</td>
+                                                            <td>San Francisco</td>
+                                                            <td>36</td>
+                                                            <td>2008/10/16</td>
+                                                            <td>$470,600</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Haley Kennedy</td>
+                                                            <td>Senior Marketing Designer</td>
+                                                            <td>London</td>
+                                                            <td>43</td>
+                                                            <td>2012/12/18</td>
+                                                            <td>$313,500</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Tatyana Fitzpatrick</td>
+                                                            <td>Regional Director</td>
+                                                            <td>London</td>
+                                                            <td>19</td>
+                                                            <td>2010/03/17</td>
+                                                            <td>$385,750</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Michael Silva</td>
+                                                            <td>Marketing Designer</td>
+                                                            <td>London</td>
+                                                            <td>66</td>
+                                                            <td>2012/11/27</td>
+                                                            <td>$198,500</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Paul Byrd</td>
+                                                            <td>Chief Financial Officer (CFO)</td>
+                                                            <td>New York</td>
+                                                            <td>64</td>
+                                                            <td>2010/06/09</td>
+                                                            <td>$725,000</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Gloria Little</td>
+                                                            <td>Systems Administrator</td>
+                                                            <td>New York</td>
+                                                            <td>59</td>
+                                                            <td>2009/04/10</td>
+                                                            <td>$237,500</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Bradley Greer</td>
+                                                            <td>Software Engineer</td>
+                                                            <td>London</td>
+                                                            <td>41</td>
+                                                            <td>2012/10/13</td>
+                                                            <td>$132,000</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Dai Rios</td>
+                                                            <td>Personnel Lead</td>
+                                                            <td>Edinburgh</td>
+                                                            <td>35</td>
+                                                            <td>2012/09/26</td>
+                                                            <td>$217,500</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Jenette Caldwell</td>
+                                                            <td>Development Lead</td>
+                                                            <td>New York</td>
+                                                            <td>30</td>
+                                                            <td>2011/09/03</td>
+                                                            <td>$345,000</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Yuri Berry</td>
+                                                            <td>Chief Marketing Officer (CMO)</td>
+                                                            <td>New York</td>
+                                                            <td>40</td>
+                                                            <td>2009/06/25</td>
+                                                            <td>$675,000</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Caesar Vance</td>
+                                                            <td>Pre-Sales Support</td>
+                                                            <td>New York</td>
+                                                            <td>21</td>
+                                                            <td>2011/12/12</td>
+                                                            <td>$106,450</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Doris Wilder</td>
+                                                            <td>Sales Assistant</td>
+                                                            <td>Sidney</td>
+                                                            <td>23</td>
+                                                            <td>2010/09/20</td>
+                                                            <td>$85,600</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Angelica Ramos</td>
+                                                            <td>Chief Executive Officer (CEO)</td>
+                                                            <td>London</td>
+                                                            <td>47</td>
+                                                            <td>2009/10/09</td>
+                                                            <td>$1,200,000</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Gavin Joyce</td>
+                                                            <td>Developer</td>
+                                                            <td>Edinburgh</td>
+                                                            <td>42</td>
+                                                            <td>2010/12/22</td>
+                                                            <td>$92,575</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Jennifer Chang</td>
+                                                            <td>Regional Director</td>
+                                                            <td>Singapore</td>
+                                                            <td>28</td>
+                                                            <td>2010/11/14</td>
+                                                            <td>$357,650</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Brenden Wagner</td>
+                                                            <td>Software Engineer</td>
+                                                            <td>San Francisco</td>
+                                                            <td>28</td>
+                                                            <td>2011/06/07</td>
+                                                            <td>$206,850</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Fiona Green</td>
+                                                            <td>Chief Operating Officer (COO)</td>
+                                                            <td>San Francisco</td>
+                                                            <td>48</td>
+                                                            <td>2010/03/11</td>
+                                                            <td>$850,000</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Shou Itou</td>
+                                                            <td>Regional Marketing</td>
+                                                            <td>Tokyo</td>
+                                                            <td>20</td>
+                                                            <td>2011/08/14</td>
+                                                            <td>$163,000</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Michelle House</td>
+                                                            <td>Integration Specialist</td>
+                                                            <td>Sidney</td>
+                                                            <td>37</td>
+                                                            <td>2011/06/02</td>
+                                                            <td>$95,400</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Suki Burks</td>
+                                                            <td>Developer</td>
+                                                            <td>London</td>
+                                                            <td>53</td>
+                                                            <td>2009/10/22</td>
+                                                            <td>$114,500</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Prescott Bartlett</td>
+                                                            <td>Technical Author</td>
+                                                            <td>London</td>
+                                                            <td>27</td>
+                                                            <td>2011/05/07</td>
+                                                            <td>$145,000</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Gavin Cortez</td>
+                                                            <td>Team Leader</td>
+                                                            <td>San Francisco</td>
+                                                            <td>22</td>
+                                                            <td>2008/10/26</td>
+                                                            <td>$235,500</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Martena Mccray</td>
+                                                            <td>Post-Sales support</td>
+                                                            <td>Edinburgh</td>
+                                                            <td>46</td>
+                                                            <td>2011/03/09</td>
+                                                            <td>$324,050</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Unity Butler</td>
+                                                            <td>Marketing Designer</td>
+                                                            <td>San Francisco</td>
+                                                            <td>47</td>
+                                                            <td>2009/12/09</td>
+                                                            <td>$85,675</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Howard Hatfield</td>
+                                                            <td>Office Manager</td>
+                                                            <td>San Francisco</td>
+                                                            <td>51</td>
+                                                            <td>2008/12/16</td>
+                                                            <td>$164,500</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Hope Fuentes</td>
+                                                            <td>Secretary</td>
+                                                            <td>San Francisco</td>
+                                                            <td>41</td>
+                                                            <td>2010/02/12</td>
+                                                            <td>$109,850</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Vivian Harrell</td>
+                                                            <td>Financial Controller</td>
+                                                            <td>San Francisco</td>
+                                                            <td>62</td>
+                                                            <td>2009/02/14</td>
+                                                            <td>$452,500</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Timothy Mooney</td>
+                                                            <td>Office Manager</td>
+                                                            <td>London</td>
+                                                            <td>37</td>
+                                                            <td>2008/12/11</td>
+                                                            <td>$136,200</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Jackson Bradshaw</td>
+                                                            <td>Director</td>
+                                                            <td>New York</td>
+                                                            <td>65</td>
+                                                            <td>2008/09/26</td>
+                                                            <td>$645,750</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Olivia Liang</td>
+                                                            <td>Support Engineer</td>
+                                                            <td>Singapore</td>
+                                                            <td>64</td>
+                                                            <td>2011/02/03</td>
+                                                            <td>$234,500</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Bruno Nash</td>
+                                                            <td>Software Engineer</td>
+                                                            <td>London</td>
+                                                            <td>38</td>
+                                                            <td>2011/05/03</td>
+                                                            <td>$163,500</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Sakura Yamamoto</td>
+                                                            <td>Support Engineer</td>
+                                                            <td>Tokyo</td>
+                                                            <td>37</td>
+                                                            <td>2009/08/19</td>
+                                                            <td>$139,575</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Thor Walton</td>
+                                                            <td>Developer</td>
+                                                            <td>New York</td>
+                                                            <td>61</td>
+                                                            <td>2013/08/11</td>
+                                                            <td>$98,540</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Finn Camacho</td>
+                                                            <td>Support Engineer</td>
+                                                            <td>San Francisco</td>
+                                                            <td>47</td>
+                                                            <td>2009/07/07</td>
+                                                            <td>$87,500</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Serge Baldwin</td>
+                                                            <td>Data Coordinator</td>
+                                                            <td>Singapore</td>
+                                                            <td>64</td>
+                                                            <td>2012/04/09</td>
+                                                            <td>$138,575</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Zenaida Frank</td>
+                                                            <td>Software Engineer</td>
+                                                            <td>New York</td>
+                                                            <td>63</td>
+                                                            <td>2010/01/04</td>
+                                                            <td>$125,250</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Zorita Serrano</td>
+                                                            <td>Software Engineer</td>
+                                                            <td>San Francisco</td>
+                                                            <td>56</td>
+                                                            <td>2012/06/01</td>
+                                                            <td>$115,000</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Jennifer Acosta</td>
+                                                            <td>Junior Javascript Developer</td>
+                                                            <td>Edinburgh</td>
+                                                            <td>43</td>
+                                                            <td>2013/02/01</td>
+                                                            <td>$75,650</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Cara Stevens</td>
+                                                            <td>Sales Assistant</td>
+                                                            <td>New York</td>
+                                                            <td>46</td>
+                                                            <td>2011/12/06</td>
+                                                            <td>$145,600</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Hermione Butler</td>
+                                                            <td>Regional Director</td>
+                                                            <td>London</td>
+                                                            <td>47</td>
+                                                            <td>2011/03/21</td>
+                                                            <td>$356,250</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Lael Greer</td>
+                                                            <td>Systems Administrator</td>
+                                                            <td>London</td>
+                                                            <td>21</td>
+                                                            <td>2009/02/27</td>
+                                                            <td>$103,500</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Jonas Alexander</td>
+                                                            <td>Developer</td>
+                                                            <td>San Francisco</td>
+                                                            <td>30</td>
+                                                            <td>2010/07/14</td>
+                                                            <td>$86,500</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Shad Decker</td>
+                                                            <td>Regional Director</td>
+                                                            <td>Edinburgh</td>
+                                                            <td>51</td>
+                                                            <td>2008/11/13</td>
+                                                            <td>$183,000</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Michael Bruce</td>
+                                                            <td>Javascript Developer</td>
+                                                            <td>Singapore</td>
+                                                            <td>29</td>
+                                                            <td>2011/06/27</td>
+                                                            <td>$183,000</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Donna Snider</td>
+                                                            <td>Customer Support</td>
+                                                            <td>New York</td>
+                                                            <td>27</td>
+                                                            <td>2011/01/25</td>
+                                                            <td>$112,000</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
                 </div>
+                @include('includes.detalle_incidencias')
             </div>
         </div>
-    </div>
-</div>
-@endsection
+        @endsection
+
+        @section('jquery')
+        <script src="{{ asset('js/jquery-2.1.1.min.js') }}"></script>
+        @endsection
+
+        @section('style')
+        <link href="{{ asset('bootstrap/plugins/datatables/media/css/dataTables.bootstrap.css') }}" rel="stylesheet">
+        <link href="{{ asset('bootstrap/plugins/datatables/extensions/Responsive/css/dataTables.responsive.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">
+        @endsection
+
+
+        @section('script')        
+        <script src="{{ asset('bootstrap/plugins/fast-click/fastclick.min.js') }}"></script>
+        <script src="{{ asset('bootstrap/plugins/nanoscrollerjs/jquery.nanoscroller.min.js') }}"></script>
+        <script src="{{ asset('bootstrap/plugins/metismenu/metismenu.min.js') }}"></script>
+        <script src="{{ asset('bootstrap/plugins/datatables/media/js/jquery.dataTables.js') }}"></script>
+        <script src="{{ asset('bootstrap/plugins/datatables/media/js/dataTables.bootstrap.js') }}"></script>
+        <script src="{{ asset('bootstrap/plugins/datatables/extensions/Responsive/js/dataTables.responsive.min.js') }}"></script>
+
+        <!--DataTables Sample [ SAMPLE ]-->
+        
+        <script src="{{ asset('js/movimientos/dashboard.js') }}"></script>
+        @endsection

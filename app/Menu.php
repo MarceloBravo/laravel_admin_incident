@@ -27,7 +27,7 @@ class Menu extends Model
     /**
      * @var array
      */
-    protected $fillable = ['nombre', 'created_at', 'updated_at', 'deleted_at', 'menu_padre_id', 'ruta', 'posicion'];
+    protected $fillable = ['nombre', 'created_at', 'updated_at', 'deleted_at', 'menu_padre_id', 'ruta', 'posicion', 'ocultar'];
     
     public static function listar(){
         return DB::select("SELECT m.id, m.nombre, m.posicion, m.ruta, m2.nombre as menu_padre "
@@ -56,16 +56,32 @@ class Menu extends Model
     {
         $res = "";
         $arrMenus = Array();
-        $menuQry = DB::select("SELECT m.id, m.nombre, m.ruta, m.posicion, (SELECT COUNT(*) FROM menus WHERE menu_padre_id = m.id) menus_hijos, m.menu_padre_id  
+        $menuQry = DB::select("SELECT m.id, m.nombre, m.ruta, m.posicion, (SELECT COUNT(*) FROM menus WHERE menu_padre_id = m.id) menus_hijos, m.menu_padre_id, m.ocultar, qry.pantalla_id, qry.ver acceder
                             FROM menus m 
                             LEFT JOIN menus m2 ON m.menu_padre_id = m2.id 
-                            WHERE m.menu_padre_id IS NULL");
+                            LEFT JOIN (
+                            SELECT 
+                                    p.menu_id,
+                                    p.nombre as pantalla, 
+                                    pr.ver, 
+                                    pr.crear, 
+                                    pr.modificar, 
+                                    pr.eliminar, 
+                            p.id pantalla_id 
+                            FROM pantallas p 
+                            LEFT JOIN permisos pr ON p.id = pr.pantalla_id 
+                            WHERE pr.rol_id = ".Auth::user()->role_id." 
+                                    AND pr.ver 
+                            ) qry ON m.id = qry.menu_id 
+                            WHERE m.menu_padre_id IS NULL 
+                            HAVING menus_hijos > 0 OR acceder 
+                            ORDER BY posicion ");
         
         foreach($menuQry as $menu)
         {
             $subMenu = Menu::getSubMenus($menu->id);
             
-            $menu = ["id"=>$menu->id,"nombre"=>$menu->nombre,"ruta"=>$menu->ruta,"posicion"=>$menu->posicion,"menus_hijos"=>$menu->menus_hijos,"submenu"=>$subMenu, "profundidad"=>0, "menu_padre_id"=>$menu->menu_padre_id];
+            $menu = ["id"=>$menu->id,"nombre"=>$menu->nombre,"ruta"=>$menu->ruta,"posicion"=>$menu->posicion,"menus_hijos"=>$menu->menus_hijos,"submenu"=>$subMenu, "profundidad"=>0, "menu_padre_id"=>$menu->menu_padre_id, "ocultar"=>$menu->ocultar];
             array_push($arrMenus, $menu); 
         }
         
@@ -78,7 +94,7 @@ class Menu extends Model
         $arrMenus = Array();
         static $profundidad = 0;
         $profundidad++;
-        $menuQry = DB::select("SELECT m.id, m.nombre, m.posicion, m.ruta, m.menu_padre_id, (SELECT COUNT(*) FROM menus WHERE menu_padre_id = m.id) menus_hijos, qry.*
+        $menuQry = DB::select("SELECT m.id, m.nombre, m.posicion, m.ruta, m.menu_padre_id, (SELECT COUNT(*) FROM menus WHERE menu_padre_id = m.id) menus_hijos, m.ocultar, qry.*
                                 FROM menus m 
                                 LEFT JOIN (
                                 SELECT 
@@ -90,7 +106,8 @@ class Menu extends Model
                                     pr.eliminar
                                 FROM pantallas p 
                                 LEFT JOIN permisos pr ON p.id = pr.pantalla_id 
-                                WHERE pr.rol_id = ".Auth::user()->role_id."                                 
+                                WHERE pr.rol_id = ".Auth::user()->role_id." 
+                                    AND pr.ver 
                                 ) qry ON m.id = qry.menu_id
                                 WHERE m.menu_padre_id = :id 
                                 ORDER BY m.menu_padre_id, posicion
@@ -98,7 +115,7 @@ class Menu extends Model
         foreach($menuQry as $menu)
         {
             $subMenu = $menu->menus_hijos > 0 ? Menu::getSubMenus($menu->id) : "";
-            $menu = ["id"=>$menu->id,"nombre"=>$menu->nombre,"ruta"=>$menu->ruta,"posicion"=>$menu->posicion,"submenu"=>$subMenu,"menus_hijos"=>$menu->menus_hijos,"profundidad"=>$profundidad, "menu_padre_id"=>$menu->menu_padre_id];
+            $menu = ["id"=>$menu->id,"nombre"=>$menu->nombre,"ruta"=>$menu->ruta,"posicion"=>$menu->posicion,"submenu"=>$subMenu,"menus_hijos"=>$menu->menus_hijos,"profundidad"=>$profundidad, "menu_padre_id"=>$menu->menu_padre_id, "ocultar"=>$menu->ocultar];
             array_push($arrMenus, $menu);
         }
         $profundidad--;

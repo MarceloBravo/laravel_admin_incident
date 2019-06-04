@@ -2,7 +2,7 @@ $(function () {
 
     $(document).ready(function () {
         grid.configurar();
-        grid.listar();        
+        grid.listar();
     });
 
 
@@ -40,18 +40,20 @@ var grid = {
         $("#tbody").empty();
         $.get("/listar_niveles", function (data) {
             $(data).each(function (index, elem) {
-                $("#tbody").append("<tr><td>" + elem.nombre + "</td><td class='colAccion'><button class='btn btn-primary' value='" + elem.id + "' onclick='editar(this)'>Editar</button></td></tr>");
+                $("#tbody").append("<tr><td>" + elem.nombre + "</td><td class='colAccion'><button class='btn btn-primary btnEditar' value='" + elem.id + "' onclick='editar(this)'>Editar</button></td></tr>");
             });
         });
+        configurar.botones();
     },
 
     filtrar: function () {
         $("#tbody").empty();
         $.post("/niveles/filtro", $("#formFiltro").serialize(), function(data){
             $(data).each(function(index, elem){
-                $("#tbody").append("<tr><td>" + elem.nombre + "</td><td><button class='btn btn-primary' value='" + elem.id + "' onclick='editar(this)'>Editar</button></td></tr>");
+                $("#tbody").append("<tr><td>" + elem.nombre + "</td><td><button class='btn btn-primary btnEditar' value='" + elem.id + "' onclick='editar(this)'>Editar</button></td></tr>");
             });
         });
+        configurar.botones();
     }
 
 };

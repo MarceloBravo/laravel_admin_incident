@@ -1,0 +1,32 @@
+.lblValue{
+    text-align: left !important;
+    font-weight: normal;
+}
+
+#editar-incidencias
+{
+    display: none;
+}
+
+.alert{
+    display: none;
+}
+
+#lblAsignadoA{
+    color: #339099;
+    font-weight: bold;
+}
+
+#lblNivel{
+    color: #15e82f;
+    font-weight: bold;
+}
+
+#lblSeveridad{
+    color: red;
+    font-weight: bold;
+}
+
+.hiddenButton{
+    display:none;
+}

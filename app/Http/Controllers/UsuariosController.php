@@ -8,9 +8,16 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use App\User;
 use App\Rol;
+use Auth;
 
 class UsuariosController extends Controller
 {
+    public function __construct() {
+        $this->middleware('acceso.pantalla',['only'=>'index']);
+        $this->middleware('grabar',['only'=>['store']]);
+        $this->middleware('actualizar',['only'=>['update']]);
+        $this->middleware('eliminar',['only'=>['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -130,5 +137,14 @@ class UsuariosController extends Controller
             $usuarios = User::filtro($filtro);
             return view("usuarios.index",compact("usuarios","filtro"));
         }
+    }
+    
+    public function cambioDeProyecto($idProyecto){
+        Auth::user()->id_proyecto_seleccionado = $idProyecto;
+        $usuario = User::find(Auth::user()->id);
+        $usuario->selected_project_id = $idProyecto;
+        $usuario->save();
+        
+        return response()->json(["",""]);
     }
 }

@@ -35,18 +35,20 @@ var grid = {
         $("#tbody").empty();
         $.get("/listar_permisos", function (data) {
             $(data).each(function (index, elem) {
-                $("#tbody").append("<tr><td>" + elem.nombre + "</td><td><button class='btn btn-primary' value='" + elem.id + "' onclick='editar(this)'>Configurar</button></td></tr>");
+                $("#tbody").append("<tr><td>" + elem.nombre + "</td><td><button class='btn btn-primary btnEditar' value='" + elem.id + "' onclick='editar(this)'>Configurar</button></td></tr>");
             });
         });
+        configurar.botones();
     },
 
     filtrar: function () {
         $("#tbody").empty();
         $.post("/permisos/filtro", $("#formFiltro").serialize(), function (data) {
             $(data).each(function (index, elem) {
-                $("#tbody").append("<tr><td>" + elem.nombre + "</td><td><button class='btn btn-primary' value='" + elem.id + "' onclick='editar(this)'>Configurar</button></td></tr>");
+                $("#tbody").append("<tr><td>" + elem.nombre + "</td><td><button class='btn btn-primary btnEditar' value='" + elem.id + "' onclick='editar(this)'>Configurar</button></td></tr>");
             });
         });
+        configurar.botones();
     }
 };
 
@@ -124,14 +126,6 @@ var botones = {
                 $("#lbl_message-error").html(msg);
             }
         });
-
-    },
-
-    actualizar: function () {
-
-    },
-
-    eliminar: function () {
 
     },
 

@@ -38,4 +38,10 @@ class Nivel extends Model
     {
         return DB::select("SELECT id, nombre FROM niveles WHERE deleted_at IS NULL AND nombre LIKE :filtro",["filtro"=>"%".$criterio."%"]);
     }
+    
+    public function usuarios()
+    {
+        return $this->belongsToMany('App\User','user_project','nivel_id','user_id')->get();
+    }
+    
 }

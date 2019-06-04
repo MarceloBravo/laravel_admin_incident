@@ -3,13 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/wamp/www/incidentMng/public/css/generic.css</file>
-            <file>file:/C:/wamp/www/incidentMng/resources/views/usuarios/form.blade.php</file>
-            <file>file:/C:/wamp/www/incidentMng/resources/views/usuarios/index.blade.php</file>
-            <file>file:/C:/wamp/www/incidentMng/resources/views/movimientos/asignar_proyecto.blade.php</file>
-            <file>file:/C:/wamp/www/incidentMng/public/css/asignar_proyectos.css</file>
-            <file>file:/C:/wamp/www/incidentMng/public/js/movimientos/asignar_proyectos.js</file>
-            <file>file:/C:/wamp/www/incidentMng/resources/views/usuarios/crear.blade.php</file>
+            <file>file:/C:/wamp/www/incidentMng/app/User.php</file>
+            <file>file:/C:/wamp/www/incidentMng/resources/views/movimientos/gestionar_incidencias.blade.php</file>
+            <file>file:/C:/wamp/www/incidentMng/public/js/movimientos/gestionar_incidencias.js</file>
+            <file>file:/C:/wamp/www/incidentMng/app/Http/Controllers/GestionarIncidenciasController.php</file>
+            <file>file:/C:/wamp/www/incidentMng/app/Proyecto.php</file>
+            <file>file:/C:/wamp/www/incidentMng/app/Incidente.php</file>
+            <file>file:/C:/wamp/www/incidentMng/app/Nivel.php</file>
         </group>
     </open-files>
 </project-private>

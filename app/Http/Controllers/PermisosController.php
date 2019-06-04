@@ -5,9 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Permiso;
 use App\Rol;
+use Auth;
 
 class PermisosController extends Controller
 {
+    public function __construc()
+    {
+        $this->middleware('acceso.pantalla',['only'=>'index']);
+        $this->middleware('grabar',['only'=>['store']]);
+        $this->middleware('actualizar',['only'=>['update']]);
+        $this->middleware('eliminar',['only'=>['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -96,5 +104,13 @@ class PermisosController extends Controller
     public function listar(){
         $permisos = Rol::all();
         return response()->json($permisos);
+    }
+    
+    
+    public function consultarPermisos($uri)
+    {
+        $permisos = Permiso::obtenerPermisos(Auth::user()->role_id, "/".$uri);
+        
+        return response()->json($permisos->toArray());
     }
 }

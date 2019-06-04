@@ -5,3 +5,7 @@
 .divButtonAddProject{
     float: right;
 }
+
+tr > td{
+    padding: 0px !important;
+}

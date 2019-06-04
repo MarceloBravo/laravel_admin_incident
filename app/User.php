@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use App\Rol;
 use App\Http\Controllers\MenuController;
+use App\UserProject;
 
 class User extends Authenticatable
 {
@@ -74,5 +75,27 @@ class User extends Authenticatable
     public function menus(){
         $menus = Menu::getMenu();
         return $menus;
+    }
+    
+    
+    //Relación de muchos a muchos con tabla pivote (proyecto -> user_project -> User )
+    public function proyectos()
+    {
+        return $this->belongsToMany('App\Proyecto', 'user_project', 'user_id', 'proyecto_id')->get();
+    }
+    
+    public function niveles()
+    {
+        return $this->belongsToMany('App\Nivel','user_project','user_id','nivel_id')->get();
+    }
+    
+    
+    
+    public function puedeAtender(Incidente $incidente)
+    {
+        return !is_null(UserProject::where('user_id',$this->id)
+                ->where('nivel_id',$incidente->nivel_id)
+                ->where('proyecto_id',$incidente->proyecto_id)
+                ->first());
     }
 }

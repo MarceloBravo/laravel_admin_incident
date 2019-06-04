@@ -41,18 +41,20 @@ var grid = {
         $("#tbody").empty();
         $.get("/listar_pantallas", function (data) {
             $(data).each(function (index, elem) {
-                $("#tbody").append("<tr><td>" + elem.nombre + "</td><td>" + elem.menu + "</td><td><button class='btn btn-primary' value='" + elem.id + "' onclick='editar(this)'>Editar</button></td></tr>");
+                $("#tbody").append("<tr><td>" + elem.nombre + "</td><td>" + elem.menu + "</td><td><button class='btn btn-primary btnEditar' value='" + elem.id + "' onclick='editar(this)'>Editar</button></td></tr>");
             });
         });
+        configurar.botones();
     },
 
     filtrar: function () {
         $("#tbody").empty();
         $.post("pantallas/filtro", $("#formFiltro").serialize(), function (data) {
             $(data).each(function (index, elem) {
-                $("#tbody").append("<tr><td>" + elem.nombre + "</td><td><button class='btn btn-primary' onclick='editar(this)'>Editar</button></td></tr>");
+                $("#tbody").append("<tr><td>" + elem.nombre + "</td><td><button class='btn btn-primary btnEditar' onclick='editar(this)'>Editar</button></td></tr>");
             });
         });
+        configurar.botones();
     }
 };
 
@@ -86,8 +88,8 @@ var form = {
         $("#boton_nuevo").val(pantalla.boton_nuevo);
         $("#boton_grabar").val(pantalla.boton_grabar);
         $("#boton_eliminar").val(pantalla.boton_eliminar);
+        $("#es_escritorio").val(pantalla.es_escritorio);
         $("#btnEliminar").attr("disabled", false);
-        
 
 
         function buscarPantalla(id) {

@@ -40,7 +40,7 @@
 @endsection
 
 @section('script')
-<!-- <script type='text/javascript' src="{{ asset('js/botones.js') }}"></script> <!-- Contiene los códigos para los botones Nuevo, Grabar, Modificar y Eliminar -->
+<script type='text/javascript' src="{{ asset('js/botones.js') }}"></script> <!-- Contiene los códigos para los botones Nuevo, Grabar, Modificar y Eliminar -->
 <script type='text/javascript' src="{{ asset('js/mantenedores/permisos.js') }}"></script>
 @endsection
 

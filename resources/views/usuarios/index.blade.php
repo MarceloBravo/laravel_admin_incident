@@ -38,7 +38,7 @@
                         <td>{{ $user->rol }}</td>
                         <td>{{ date('m-d-Y',strtotime($user->created_at)) }}</td>
                         <td class='colAccion'>
-                            {{link_to_route("asignar_proyecto.show", $title="Asignar proyecto", $parameters=$user->id, $attributes=['class'=>'btn btn-default btn-xs'])}}
+                            <!-- {{link_to_route("asignar_proyecto.show", $title="Asignar proyecto", $parameters=$user->id, $attributes=['class'=>'btn btn-default btn-xs'])}} -->
                             {{link_to_route("usuarios.edit", $title="Editar", $parameters=$user->id, $attributes=['class'=>'btn btn-primary btn-xs'])}}                            
                         </td>
                     </tr>

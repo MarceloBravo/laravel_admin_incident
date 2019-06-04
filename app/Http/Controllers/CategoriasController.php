@@ -8,6 +8,12 @@ use App\Categoria;
 
 class CategoriasController extends Controller
 {
+    public function __construct() {
+        $this->middleware('acceso.pantalla',['only'=>'index']);
+        $this->middleware('grabar',['only'=>['store']]);
+        $this->middleware('actualizar',['only'=>['update']]);
+        $this->middleware('eliminar',['only'=>['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *

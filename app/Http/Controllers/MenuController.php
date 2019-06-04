@@ -8,6 +8,12 @@ use App\Menu;
 
 class MenuController extends Controller
 {
+    public function __construct() {
+        $this->middleware('acceso.pantalla',['only'=>'index']);
+        $this->middleware('grabar',['only'=>['store']]);
+        $this->middleware('actualizar',['only'=>['update']]);
+        $this->middleware('eliminar',['only'=>['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -37,17 +43,17 @@ class MenuController extends Controller
      */
     public function store(MenusRequest $request)
     {
-        $menu = Menu::find($request['id']);
-        if(is_null($menu)){
+        //$menu = Menu::find($request['id']);
+        //if(is_null($menu)){
             $menu = new Menu();
-            $msg = ["message-ok","El registro ha sido creado."];
-        }else{
-            $msg = ["message-ok","El registro ha sido actualizado."];
-        }
+            //$msg = ["message-ok","El registro ha sido creado."];
+        //}else{
+        //    $msg = ["message-ok","El registro ha sido actualizado."];
+        //}
         $menu->fill($request->all());
         $menu->save();
         
-        return response()->json($msg);
+        return response()->json(["message-ok","El registro ha sido creado."]);
     }
 
     /**
@@ -82,20 +88,11 @@ class MenuController extends Controller
      */
     public function update(Request $request, $id)
     {
-        /*
         $menu = Menu::find($id);
-        if(is_null($menu)){
-            $menu = new Menu();
-            $msg = ["message-ok","El registro ha sido creado."];
-        }else{
-            $msg = ["message-ok","El registro ha sido actualizado."];
-        }
         $menu->fill($request->all());
         $menu->save();
         
-        return response()->json($msg);
-         * */
-        return "update";
+        return response()->json(["message-ok","El registro ha sido actualizado."]);
     }
 
     /**
