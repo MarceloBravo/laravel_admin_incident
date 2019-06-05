@@ -21,7 +21,7 @@ var incidencias = {
         $("#lblFechaIngreso").html(data.proyecto.created_at); 
         $("#lblAsignadoA").html(data.soporte); 
         $("#lblSeveridad").html(data.severidad); 
-        $("#lblEstado").html(data.soporte); 
+        $("#lblEstado").html(data.estado); 
         $("#lblTitulo").html(data.incidente.titulo); 
         $("#lblDescripcion").html(data.incidente.descripcion); 
         $("#lblAdjuntos").html("No existen archivos adjuntos."); 

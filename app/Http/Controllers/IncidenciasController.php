@@ -55,7 +55,7 @@ class IncidenciasController extends Controller
     public function show($id)
     {
         $incidente = Incidente::find($id);
-        return response()->json(['incidente'=>$incidente, 'severidad'=>$incidente->severidad_nombre,'proyecto'=>$incidente->proyecto(),'nivel'=>$incidente->nivel(),'soporte'=>$incidente->nombre_soporte,'categoria'=>$incidente->categoria()]);
+        return response()->json(['incidente'=>$incidente, 'severidad'=>$incidente->severidad_nombre,'proyecto'=>$incidente->proyecto(),'nivel'=>$incidente->nivel(),'estado'=>$incidente->getEstadoAttribute(),'soporte'=>$incidente->nombre_soporte,'categoria'=>$incidente->categoria()]);
     }
 
     /**

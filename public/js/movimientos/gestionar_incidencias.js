@@ -40,6 +40,7 @@ $(function(){
 var botones = {
     configurar: function(){
         $.post("/gestion_estado_botones/"+$("#lblCodigo").html(),{_token:$("#_token").val()}, function(data){
+            console.log(data);
             botones.activaDesactiva(data);
         });
     },
@@ -79,7 +80,7 @@ var botones = {
         $("#message-ok, #message-error").css("display","none");
         var data = await derivar();
         datos.mostrar(data);
-        botones.activaDesactiva(accion.derivar);
+        botones.activaDesactiva(data[2]);
         $("#btnDerivar").css("display","none");
         
         
@@ -118,7 +119,7 @@ var botones = {
     
     activaDesactiva: function(estadoBotones){
         $("#btnAtender").css("display", estadoBotones.atender);
-        $("#btnActualizar").css("display", estadoBotones.actualizar);
+        $("#btnEditar").css("display", estadoBotones.editar);
         $("#btnDerivar").css("display", estadoBotones.derivar);
         $("#btnFinalizarIncidencia").css("display", estadoBotones.finalizar);        
         $("#btnReabrir").css("display", estadoBotones.reabrir);

@@ -71,3 +71,8 @@
     </div>
 </div>
 @endsection
+
+@section('style')
+<link type="text/css" href="{{ asset('css\login.css') }}" rel="stylesheet"/>
+@endsection
+

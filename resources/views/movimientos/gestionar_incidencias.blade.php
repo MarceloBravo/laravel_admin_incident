@@ -74,23 +74,12 @@
     </div>
 
     <div class="panel-footer text-right">
-        <div class="form-group">
-            
-            @if($incidencia->activa)
-                @if($incidencia->soporte_id != Auth::user()->id  && Auth::user()->puedeAtender($incidencia))  
-                
-                    <button id="btnAtender" class="btn btn-primary" type="button" @if(!is_null($incidencia->soporte_id))style="display:none"@endif>Atender</button>
-                    <button id="btnDerivar" class="btn btn-primary" type="button" @if(is_null($incidencia->soporte_id)) style="display:none" @endif>Derivar</button>
-                @endif
-                @if($incidencia->cliente_id == Auth::user()->id)
-                    <button id="btnCerrarIncidencia" class="btn btn-primary" type="button">Finalizar incidencia</button>
-                    <button id="btnEditar" class="btn btn-primary" type="button">Editar</button>
-                @endif
-            @else
-                @if($incidencia->cliente_id == Auth::user()->id)
-                <button id="btnReabrir" class="btn btn-primary" type="button">Reabrir</button>
-                @endif
-            @endif
+        <div class="form-group">            
+            <button id="btnAtender" class="btn btn-primary hiddenButton" type="button">Atender</button>
+            <button id="btnDerivar" class="btn btn-primary hiddenButton" type="button">Derivar</button>
+            <button id="btnFinalizarIncidencia" class="btn btn-primary hiddenButton" type="button">Finalizar incidencia</button>
+            <button id="btnEditar" class="btn btn-primary hiddenButton" type="button">Editar</button>            
+            <button id="btnReabrir" class="btn btn-primary hiddenButton" type="button">Reabrir</button>            
             <button id="btnCerrar" class="btn btn-danger" type="button">cerrar</button>
         </div>
     </div>

@@ -129,11 +129,11 @@ class GestionarIncidenciasController extends Controller
     
     private function estadoBotones($incidencia)
     {
-        $atender = "none"; $derivar = "none"; $finalizar = "none"; $editar = ""; $reabrir = "none";
+        $atender = "none"; $derivar = "none"; $finalizar = "none"; $editar = "none"; $reabrir = "none";
         if($incidencia->activa)
         {
-            if(!is_null($incidencia->soporte_id)){$atender = "inline-block";}
-            if(is_null($incidencia->soporte_id)){$derivar = "inline-block";}
+            if(is_null($incidencia->soporte_id)){$atender = "inline-block";}
+            if(!is_null($incidencia->soporte_id) && Auth::user()->puedeAtender($incidencia)){$derivar = "inline-block";}
             if($incidencia->cliente_id == Auth::user()->id) {$editar = "inline-block";}
             if($incidencia->cliente_id == Auth::user()->id) {$finalizar = "inline-block";}
         }else{
@@ -144,7 +144,7 @@ class GestionarIncidenciasController extends Controller
             "derivar"=>$derivar,
             "editar"=>$editar,
             "finalizar"=>$finalizar,
-            "reabrir"=>$editar
+            "reabrir"=>$reabrir
             ];
         
         return $estado;
