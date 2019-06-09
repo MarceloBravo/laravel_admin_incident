@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-12">
+        <div class="col-md-9">
             <div class="card">
                 <div class="card-header">Dashboard</div>
 
@@ -138,33 +138,37 @@
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
                 @include('includes.detalle_incidencias')
             </div>
         </div>
-        @endsection
+        @include('includes.chat')
+    </div>
+</div>
+@endsection
 
-        @section('jquery')
-        <script src="{{ asset('js/jquery-2.1.1.min.js') }}"></script>
-        @endsection
+@section('jquery')
+<script src="{{ asset('js/jquery-2.1.1.min.js') }}"></script>
+@endsection
 
-        @section('style')
-        <link href="{{ asset('bootstrap/plugins/datatables/media/css/dataTables.bootstrap.css') }}" rel="stylesheet">
-        <link href="{{ asset('bootstrap/plugins/datatables/extensions/Responsive/css/dataTables.responsive.css') }}" rel="stylesheet">
-        <link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">
-        @endsection
+@section('style')
+<link href="{{ asset('bootstrap/plugins/datatables/media/css/dataTables.bootstrap.css') }}" rel="stylesheet">
+<link href="{{ asset('bootstrap/plugins/datatables/extensions/Responsive/css/dataTables.responsive.css') }}" rel="stylesheet">
+<link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">
+@endsection
 
 
-        @section('script')        
-        <script src="{{ asset('bootstrap/plugins/fast-click/fastclick.min.js') }}"></script>
-        <script src="{{ asset('bootstrap/plugins/nanoscrollerjs/jquery.nanoscroller.min.js') }}"></script>
-        <script src="{{ asset('bootstrap/plugins/metismenu/metismenu.min.js') }}"></script>
-        <script src="{{ asset('bootstrap/plugins/datatables/media/js/jquery.dataTables.js') }}"></script>
-        <script src="{{ asset('bootstrap/plugins/datatables/media/js/dataTables.bootstrap.js') }}"></script>
-        <script src="{{ asset('bootstrap/plugins/datatables/extensions/Responsive/js/dataTables.responsive.min.js') }}"></script>
+@section('script')        
+<script src="{{ asset('bootstrap/plugins/fast-click/fastclick.min.js') }}"></script>
+<script src="{{ asset('bootstrap/plugins/nanoscrollerjs/jquery.nanoscroller.min.js') }}"></script>
+<script src="{{ asset('bootstrap/plugins/metismenu/metismenu.min.js') }}"></script>
+<script src="{{ asset('bootstrap/plugins/datatables/media/js/jquery.dataTables.js') }}"></script>
+<script src="{{ asset('bootstrap/plugins/datatables/media/js/dataTables.bootstrap.js') }}"></script>
+<script src="{{ asset('bootstrap/plugins/datatables/extensions/Responsive/js/dataTables.responsive.min.js') }}"></script>
 
-        <!--DataTables Sample [ SAMPLE ]-->
-        
-        <script src="{{ asset('js/movimientos/dashboard.js') }}"></script>
-        @endsection
+<!--DataTables Sample [ SAMPLE ]-->
+
+<script src="{{ asset('js/movimientos/dashboard.js') }}"></script>
+<script src="{{ asset('js/movimientos/chat.js') }}"></script>
+@endsection

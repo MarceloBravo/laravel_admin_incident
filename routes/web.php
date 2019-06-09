@@ -48,6 +48,7 @@ Route::group(['middleware'=>['auth','checkrol']], function(){
     Route::resource("proyectos","ProyectosController");
     Route::resource('categorias','CategoriasController');    
     Route::resource('pantallas','PantallaController');
+    Route::resource('chat','ChatController');
     
     Route::resource('incidencias' ,'IncidenciasController');
     Route::resource('niveles','NivelController');    
